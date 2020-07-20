@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext} from "react";
 import io from 'socket.io-client'
 
 const GeneralContext = createContext()
@@ -8,6 +8,13 @@ socket.on('connect', () => console.log('[IO] Connect => A new connection has bee
 
 export default function GeneralContextProvider({children}){
   const [portIsOpen,setPortIsOpen] = useState(null)
+
+  useEffect( () => {
+    socket.on('serialResponse',({status, message}) => {
+      setPortIsOpen(status)
+      alert(message)
+    })
+  },[socket])
 
   return (
     <GeneralContext.Provider
@@ -25,6 +32,6 @@ export default function GeneralContextProvider({children}){
 export function useGeneralContext() {
   const context = useContext(GeneralContext)
   if (!context) throw new Error("useGeneralContext must be used within a GeneralContext");
-  const {socket, portIsOpen, setPortIsOpen} = context
-  return {socket, portIsOpen, setPortIsOpen}
+  const {socket, portIsOpen} = context
+  return {socket, portIsOpen}
 }
