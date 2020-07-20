@@ -36,11 +36,16 @@ io.on('connection', socket => {
       console.log('Error: ', err.message)
       io.emit('serialResponse',{status:false,message:'[ERROR] ' + err.message})
     })
-
+    
     port.on('close', () => {
       console.log(`[SERIAL] ${path} is closed`)
       portIsOpen = false;
       io.emit('serialResponse',{status:false})
+    })
+
+    port.on('data', data => {
+      console.log('Data:', data)
+      io.emit('serialRead',data.toString())
     })
   })
 
