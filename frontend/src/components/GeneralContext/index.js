@@ -12,9 +12,9 @@ export default function GeneralContextProvider({children}){
   useEffect( () => {
     socket.on('serialResponse',({status, message}) => {
       setPortIsOpen(status)
-      alert(message)
+      if(message) alert(message)
     })
-  },[socket])
+  },[])
 
   return (
     <GeneralContext.Provider

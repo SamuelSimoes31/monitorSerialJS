@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useGeneralContext} from '../GeneralContext';
 
-export default function SerialConnetion(props) {
+export default function SerialConnetion() {
   const { socket, portIsOpen } = useGeneralContext()
 
   const [ports,setPorts] = useState([])
@@ -10,14 +10,12 @@ export default function SerialConnetion(props) {
     socket.emit('seriaportList')
     socket.on('seriaportList', list => {
       setPorts(list)
+      if(list.length === 0) alert('It looks like there is no serial port available!')
     })
   },[socket])
 
   function handleSubmit(e){
     e.preventDefault()
-    if(ports.length == 0){
-      alert('No ports available!')
-    }
     const form = {}
     const data = new FormData(e.target)
     for (let entry of data.entries()) {
@@ -32,7 +30,7 @@ export default function SerialConnetion(props) {
     <div className="container">
       <form name="serial" onSubmit={handleSubmit} defaultValue="">
         <label >port</label>
-        <select name="path" onClick={() => socket.emit('seriaportList')}>
+        <select name="path" onClick={() => socket.emit('seriaportList')} disabled={ !portIsOpen ?'':'disabled'} >
           {ports.map(port => {
             return  <option key={port.path} value={port.path}>
                       {port.path+': '+port.manufacturer}
@@ -40,7 +38,7 @@ export default function SerialConnetion(props) {
           )}
         </select>
         <label >baudrate</label>
-        <select name="baud" defaultValue={9600}>
+        <select name="baud" defaultValue={9600} disabled={ ports.length && !portIsOpen ?'':'disabled'}>
           <option value={300}>300</option>
           <option value={600}>600</option>
           <option value={1200}>1200</option>
@@ -54,7 +52,7 @@ export default function SerialConnetion(props) {
           <option value={57600}>57600</option>
           <option value={115200}>115200</option>
         </select>
-          <input type="submit" value={portIsOpen?'CLOSE':'OPEN'} />
+        <input type="submit" value={portIsOpen?'CLOSE':'OPEN'} disabled={ ports.length ?'':'disabled'} />
       </form>
     </div>
   )
