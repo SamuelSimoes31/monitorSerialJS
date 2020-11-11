@@ -47,6 +47,12 @@ io.on('connection', socket => {
       console.log('Data:', data)
       io.emit('serialRead',data.toString())
     })
+
+    
+    socket.on('writeSerial', msg => {
+      port.write(msg);
+    })
+
   })
 
   socket.on('closeSerial', () => {
