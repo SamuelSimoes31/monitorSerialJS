@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useGeneralContext} from '../GeneralContext';
+import ByteBox from '../ByteBox';
 
 import './styles.css'
 
@@ -36,6 +37,7 @@ export default function SerialRead() {
         </button>
         <button onClick={handleSend}>SEND</button>
       </span>
+      <ByteBox />
     </div>
   )
 }
