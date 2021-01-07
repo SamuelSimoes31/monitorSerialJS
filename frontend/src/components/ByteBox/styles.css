@@ -2,7 +2,7 @@
   height: 50px;
   min-width: 50px;
 
-  border: 1px black solid;
+  border: 2px black solid;
   border-radius: 10px;
   /* padding: 0 5px; */
 
@@ -16,6 +16,7 @@
 .byte-number-container p {
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 .byte-number-container p:nth-child(1) {
@@ -28,5 +29,13 @@
   position: absolute;
   bottom: -1%;
   right: 2%;
-
 }
+
+.byte-box-form {
+  background-color: white;
+  position: absolute;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+
