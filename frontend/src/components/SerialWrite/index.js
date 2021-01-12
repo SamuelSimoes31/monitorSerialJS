@@ -6,7 +6,8 @@ import './styles.css'
 
 export default function SerialRead() {
   const { socket, portIsOpen } = useGeneralContext()
-  const [writeMessages,setWriteMessages] = useState('OXE')
+  const [writeMessages,setWriteMessages] = useState()
+
   const [byteMode,setByteMode] = useState(true)
 
   function handleSend(){
@@ -19,7 +20,13 @@ export default function SerialRead() {
         byteMode ?
         (
           <div className="byte-mode-container">
-            <p>QUADRADO</p>
+            <ByteBox />
+            <ByteBox />
+            <ByteBox />
+            <ByteBox />
+            <ByteBox />
+            <ByteBox />
+            <ByteBox />
           </div>
         ) : (
           <textarea
@@ -37,7 +44,6 @@ export default function SerialRead() {
         </button>
         <button onClick={handleSend}>SEND</button>
       </span>
-      <ByteBox />
     </div>
   )
 }

@@ -6,7 +6,7 @@ function ByteBoxForm({nState}) {
 
   function setNumber(e,base){
     let num = e.target.value;
-    if(num == '') nState.setNumber(0);
+    if(num === '') nState.setNumber(0);
     else {
       num = parseInt(num,base);
       if(!num) num = 0;
@@ -22,7 +22,7 @@ function ByteBoxForm({nState}) {
 
   return (
     <div className="byte-box-form container">
-      <form onSubmit={submitNumber}>
+      <form onSubmit={submitNumber} autocomplete="off">
         <div>
           <label htmlFor="dec">dec</label>
           <input
