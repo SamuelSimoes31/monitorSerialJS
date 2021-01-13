@@ -6,7 +6,7 @@ import './styles.css'
 
 export default function SerialRead() {
   const { socket, portIsOpen } = useGeneralContext()
-  const [writeMessage,setWriteMessage] = useState()
+  const [writeMessage,setWriteMessage] = useState([1,2,3])
 
   const [byteMode,setByteMode] = useState(true)
 
@@ -14,19 +14,26 @@ export default function SerialRead() {
     socket.emit('writeSerial',writeMessage)
   }
 
+  function handleSwitchMode() {
+    setByteMode(!byteMode);
+  }
+
+  useEffect(() => {
+    console.log('writeMessage:',writeMessage);
+  },[writeMessage])
+
   return(
     <div className="container">
       {
         byteMode ?
         (
           <div className="byte-mode-container">
-            <ByteBox />
-            <ByteBox />
-            <ByteBox />
-            <ByteBox />
-            <ByteBox />
-            <ByteBox />
-            <ByteBox />
+            {
+              writeMessage.map((e,i,a) => {
+                console.log(writeMessage)
+                return <ByteBox key={i} index={i} element={e} array={a} setMessage={setWriteMessage}/>
+              })
+            }
           </div>
         ) : (
           <textarea
@@ -39,7 +46,7 @@ export default function SerialRead() {
         )
       }
       <span>
-        <button onClick={() => { setByteMode(!byteMode)}}>
+        <button onClick={handleSwitchMode}>
           {byteMode?"Switch to ASCII mode":"Switch to byte mode"}
         </button>
         <button onClick={handleSend}>SEND</button>
