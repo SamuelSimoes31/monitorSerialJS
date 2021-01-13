@@ -6,12 +6,12 @@ import './styles.css'
 
 export default function SerialRead() {
   const { socket, portIsOpen } = useGeneralContext()
-  const [writeMessages,setWriteMessages] = useState()
+  const [writeMessage,setWriteMessage] = useState()
 
   const [byteMode,setByteMode] = useState(true)
 
   function handleSend(){
-    socket.emit('writeSerial',writeMessages)
+    socket.emit('writeSerial',writeMessage)
   }
 
   return(
@@ -32,8 +32,8 @@ export default function SerialRead() {
           <textarea
           rows={5}
           cols={80}
-          value={writeMessages}
-          onChange={e => setWriteMessages(e.target.value)}
+          value={writeMessage}
+          onChange={e => setWriteMessage(e.target.value)}
           disabled={ portIsOpen ?'':'disabled'}
           />
         )
